@@ -35,5 +35,7 @@ public class ComixDatabaseView implements SystemViews {
         ComixDatabaseView view = new ComixDatabaseView();
         String str = view.readDatabase("COMIXProject/comics.csv");
         System.out.println(str);
+
+        // TODO capturing user commands goes here ?
     }
 }
