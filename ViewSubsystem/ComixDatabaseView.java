@@ -23,6 +23,8 @@ public class ComixDatabaseView implements SystemViews {
                 sb.append( System.lineSeparator() );
                 line = br.readLine();
             }
+
+            br.close();
             return sb.toString();
         }
         catch( IOException e ) {

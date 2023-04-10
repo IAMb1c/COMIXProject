@@ -1,7 +1,9 @@
 package COMIXProject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -9,9 +11,10 @@ public class Main {
 
     static String userName;
     static String id;
-    static String userFile = "users.csv";
+    static String userPass;
+    static String userFile = "COMIXProject/users.csv";
     
-    // helper method to retrieve the user's input 
+    /** Helper Method to grab the user's input */
     private static String getUserInput() {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -23,29 +26,112 @@ public class Main {
         }
     }
 
-    // prints out helpful information for the user
+    /** Prints the starting greeting for the user */
     private static void printMenu() {
         String userInput = "";
-        System.out.println("Welcome to COMIX!\nPlease enter your name or GUEST to continue:");
+        System.out.println("Welcome to COMIX!\nPlease enter your name or leave blank to continue:");
         userInput = getUserInput();
 
-        if( findUser(userInput) ) {
+        if( findUser( userInput ) && !userInput.equals("") ) {
+            // handle the user's password
+            while( true ) {
+                System.out.println("Please enter your password:");
+                userInput = getUserInput();
+                if( userInput.equals(userPass) ) {
+                    System.out.println("Password accepted");
+                    break;
+                } else {
+                    System.out.println("Password incorrect");
+                }
+            }
             System.out.println("Welcome back " + userName + "!");
         } else {
-            System.out.println("Welcome!");
+            System.out.println("Welcome! \n Would You Like to Create an Account?: Y \n Press enter to continue as a guest");
+            userInput = getUserInput();
+            if( userInput.equals("Y") ) {
+                createNewUser();
+            }
         }
         System.out.println("Please select an option:");
         printInfo();
     }
 
+    /** Creates a new user and adds them to the user csv file */
+    private static void createNewUser() {
+        String userInput = "";
+        String newUserName = "";
+        String newPassword = "";
+        String namingConventionsAreGood1 = "";
+
+        // for getting the username
+        while( true ) { 
+            System.out.println("Please enter a username:");
+            userInput = getUserInput();
+            if( findUser( userInput ) ) {
+                System.out.println("Username already exists");
+            } else {
+                System.out.println("Username created");
+                newUserName = userInput;
+                break;
+            }
+        } 
+        // for getting the password 
+        while( true ) {
+            System.out.println("Please enter a password:");
+            userInput = getUserInput();
+            System.out.println("Please confirm your password:");
+            String userInput2 = getUserInput();
+            if( userInput.equals(userInput2) ) {
+                System.out.println("Password created");
+                newPassword = userInput2;
+                break;
+            } else {
+                System.out.println("Passwords do not match");
+            }
+        }
+        // grab the last id from the last row of the user csv file and add 1 to it for the new user
+        try( BufferedReader br = new BufferedReader( new FileReader( userFile ) ) ) {
+            String line = "";
+            while( ( line = br.readLine() ) != null ) {
+                String[] user = line.split(",");
+                namingConventionsAreGood1 = user[0];
+            }
+            // ignore this really ugly code, I do not like quotes
+            namingConventionsAreGood1 = namingConventionsAreGood1.substring(1, namingConventionsAreGood1.length()-1);
+            namingConventionsAreGood1 = Integer.toString(Integer.parseInt(namingConventionsAreGood1) + 1);
+        }
+        catch( IOException e ) {
+            System.out.println( "Error reading file: " + e.getMessage() );
+        }
+        // write the new user to the user csv file with the new id, username, and password
+        try( BufferedWriter bw = new BufferedWriter( new FileWriter( userFile, true ) ) ) {
+            userName = newUserName;
+            id = namingConventionsAreGood1;
+            namingConventionsAreGood1 = "\"" + namingConventionsAreGood1 + "\"";
+            newUserName = "\"" + newUserName + "\"";
+            newPassword = "\"" + newPassword + "\"";
+            bw.write( namingConventionsAreGood1 + "," + newUserName + "," + newPassword + "\n" );
+            bw.close();
+        }
+        catch( IOException e ) {
+            System.out.println( "Error writing to file: " + e.getMessage() );
+        }
+    }
+
+    /** Prints the navigational items for the user */
     private static void printInfo() {
         System.out.println("""
             "COMIX" - go to the COMIX database view \n
             "VIEW" - go to the personal collection view \n
             "EXIT - exit the program
-                """);
+        """);
     }
 
+    /**
+     * @param userInput The user's inputted username
+     * @return true if the user is found and false otherwise
+     * Searches the user csv file for the user's name and sets the user's name and id to the matching row in the file
+     */
     private static boolean findUser( String userInput ) {
         String line = "";
         // get a user from the user csv file and set the user's name and id to the matching row in the file
@@ -53,11 +139,10 @@ public class Main {
             while( ( line = br.readLine() ) != null ) {
                 String[] user = line.split(",");
                 if( user[1].contains(userInput) ) {
-                    userName = user[0];
-                    id = user[1];
+                    id = user[0];
+                    userName = user[1];
+                    userPass = user[2];
                     return true;
-                } else {
-                    return false;
                 }
             }
         }
@@ -67,34 +152,46 @@ public class Main {
         return false;
     }
     
+    /** The main method for the program */
     public static void main(String[] args) {
-        boolean exit = false;
-        
-        printMenu();
+        boolean running = true;
+        // for testing purposes so its easier to restart app
+        while( running  ) { // remove this later
+            boolean exit = false;
+            
+            printMenu();
 
-        while( !exit ) {
-            String userInput = getUserInput();
-            switch( userInput ) {
-                case "COMIX" -> {
-                    System.out.println("COMIX");
-                    printInfo();
+            while( !exit ) {
+                String userInput = getUserInput();
+                switch( userInput ) {
+                    case "COMIX" -> {
+                        System.out.println("COMIX");
+                        printInfo();
+                    }
+                    case "VIEW" -> {
+                        System.out.println("VIEW");
+                        printInfo();
+                    }
+                    case "EXIT" -> {
+                        System.out.println("EXIT");
+                        exit = true;
+                        running = false; // remove this line later
+                    }
+                    case "R" -> { // remove this case later
+                        System.out.println("R");
+                        printInfo();
+                        exit = true;
+                    }
+
+                    default -> {
+                        System.out.println("Invalid input");
+                        printInfo();
+                    }
                 }
-                case "VIEW" -> {
-                    System.out.println("VIEW");
-                    printInfo();
-                }
-                case "EXIT" -> {
-                    System.out.println("EXIT");
-                    exit = true;
-                }
-                default -> {
-                    System.out.println("Invalid input");
-                    printInfo();
-                }
+                // get user input
+                // process user input
+                // display results
             }
-            // get user input
-            // process user input
-            // display results
         }
     }
 }
