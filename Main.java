@@ -9,9 +9,7 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-    static String userName;
-    static String id;
-    static String userPass;
+    static User user = new User();
     static String userFile = "COMIXProject/users.csv";
     
     /** Helper Method to grab the user's input */
@@ -37,14 +35,14 @@ public class Main {
             while( true ) {
                 System.out.println("Please enter your password:");
                 userInput = getUserInput();
-                if( userInput.equals(userPass) ) {
+                if( userInput.equals( user.getPassword().substring(1, user.getPassword().length()-1) ) ) {
                     System.out.println("Password accepted");
                     break;
                 } else {
                     System.out.println("Password incorrect");
                 }
             }
-            System.out.println("Welcome back " + userName + "!");
+            System.out.println("Welcome back " + user.getName() + "!");
         } else {
             System.out.println("Welcome! \n Would You Like to Create an Account?: Y \n Press enter to continue as a guest");
             userInput = getUserInput();
@@ -105,8 +103,7 @@ public class Main {
         }
         // write the new user to the user csv file with the new id, username, and password
         try( BufferedWriter bw = new BufferedWriter( new FileWriter( userFile, true ) ) ) {
-            userName = newUserName;
-            id = namingConventionsAreGood1;
+            user.setUser(Integer.parseInt(namingConventionsAreGood1), newUserName, newPassword);
             namingConventionsAreGood1 = "\"" + namingConventionsAreGood1 + "\"";
             newUserName = "\"" + newUserName + "\"";
             newPassword = "\"" + newPassword + "\"";
@@ -137,11 +134,12 @@ public class Main {
         // get a user from the user csv file and set the user's name and id to the matching row in the file
         try( BufferedReader br = new BufferedReader( new FileReader( userFile ) ) ) {
             while( ( line = br.readLine() ) != null ) {
-                String[] user = line.split(",");
-                if( user[1].contains(userInput) ) {
-                    id = user[0];
-                    userName = user[1];
-                    userPass = user[2];
+                String[] words = line.split(",");
+                if( words[1].contains(userInput) ) {
+                    user.setUser( Integer.parseInt(words[0].substring(1,words[0].length()-1)), words[1], words[2] );
+                    // id = words[0];
+                    // userName = words[1];
+                    // userPass = words[2];
                     return true;
                 }
             }
