@@ -1,4 +1,4 @@
-package COMIXProject.ViewSubsystem;
+package ViewSubsystem;
 
 public class UserManager implements ViewManager {
     private String view;

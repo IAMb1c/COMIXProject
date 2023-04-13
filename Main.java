@@ -1,4 +1,3 @@
-package COMIXProject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +9,7 @@ import java.io.InputStreamReader;
 public class Main {
 
     static User user = new User();
-    static String userFile = "COMIXProject/users.csv";
+    static String userFile = "./users.csv";
     
     /** Helper Method to grab the user's input */
     private static String getUserInput() {
