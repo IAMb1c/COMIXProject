@@ -32,4 +32,8 @@ public class ComicDatabase{
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Comic> getComics(){
+        return this.comics;
+    }
 }
