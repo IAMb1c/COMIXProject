@@ -1,4 +1,4 @@
-package COMIXProject.ViewSubsystem;
+package ViewSubsystem;
 
 public class PersonalCollectionView implements SystemViews {
     
