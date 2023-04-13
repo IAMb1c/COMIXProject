@@ -1,5 +1,3 @@
-package PersonalCollectionController;
-
 import java.util.List;
 
 public class UndoAction {

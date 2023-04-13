@@ -1,5 +1,3 @@
-package ViewSubsystem;
-
 public class PersonalCollectionView implements SystemViews {
     
     static String PCFile = "../personalCollection.csv";

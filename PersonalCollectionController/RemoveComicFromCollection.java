@@ -1,5 +1,3 @@
-package PersonalCollectionController;
-
 public class RemoveComicFromCollection implements ModifyCommand{
 
     public Comic comic;

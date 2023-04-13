@@ -1,4 +1,4 @@
-package PersonalCollectionController;
+import java.util.List;
 
 public class AddComicToCollection implements ModifyCommand{
 
