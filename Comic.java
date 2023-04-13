@@ -15,8 +15,8 @@ public class Comic {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
-    public void setSeriesTitle(String serierTitle) {
-        this.seriesTitle = serierTitle;
+    public void setSeriesTitle(String seriesTitle) {
+        this.seriesTitle = seriesTitle;
     }
     public void setVolumeNumber(Integer volumeNumber) {
         this.volumeNumber = volumeNumber;
