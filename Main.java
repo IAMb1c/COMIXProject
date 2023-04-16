@@ -1,4 +1,3 @@
-package COMIXProject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -117,11 +116,7 @@ public class Main {
 
     /** Prints the navigational items for the user */
     private static void printInfo() {
-        System.out.println("""
-            "COMIX" - go to the COMIX database view \n
-            "VIEW" - go to the personal collection view \n
-            "EXIT - exit the program
-        """);
+        System.out.println("'COMIX' - go to the COMIX database view \n 'VIEW' - go to the personal collection view \n 'EXIT' - exit the program");
     }
 
     /**
