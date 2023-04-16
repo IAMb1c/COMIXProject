@@ -1,4 +1,4 @@
-package comicDtabaseController;
+package comicDatabaseController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,13 +8,7 @@ import java.util.Stack;
  * Parses csv for data 
  */
 public class ImportData implements ModifyCommand {
-    public Stack<ModifyCommand> redoStack = new Stack<>();
-    public Stack<ModifyCommand> undoStack = new Stack<>();
 
-    public ImportData(Stack<ModifyCommand> redoStack, Stack<ModifyCommand>undoStack){
-        this.redoStack = redoStack;
-        this.undoStack = undoStack;
-    }
     private Map<String, Comic> database = new HashMap<>();
     
     // public void read(){
@@ -51,7 +45,7 @@ public class ImportData implements ModifyCommand {
     }
 
     @Override
-    public void executeCommand(List<Comic> database, Comic comic) {
+    public void executeCommand() {
         // TODO Auto-generated method stub
         
     }

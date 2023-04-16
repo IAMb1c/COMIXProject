@@ -1,4 +1,4 @@
-package comicDtabaseController;
+package comicDatabaseController;
 import java.util.Properties;
 
 public class Comic {
