@@ -1,4 +1,3 @@
-package COMIXProject;
 
 public class User {
     private int id;
