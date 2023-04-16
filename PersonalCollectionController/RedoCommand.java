@@ -21,5 +21,7 @@ public class RedoCommand implements ModifyCommand{
         redoStack.remove(redoStack.size() - 1);
         // execute the last command in the command stack
         lastCommand.execute();
+        // add the last command to the undoable stack
+        undoStack.add(lastCommand);
     }
 }
