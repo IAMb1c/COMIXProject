@@ -1,4 +1,4 @@
-package COMIXProject;
+
 
 public class ComicDatabase{
     private ArrayList<Comic> comics;

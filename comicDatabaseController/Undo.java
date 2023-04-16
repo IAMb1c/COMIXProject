@@ -1,7 +1,7 @@
 package comicDatabaseController;
 
 import java.util.List;
-import java.util.Stack;
+import main.Comic;
 
 /**
  * Undo class contains a undoStack which conatins commands that you
