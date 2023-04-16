@@ -1,4 +1,6 @@
-package COMIXProject.ViewSubsystem;
+package ViewSubsystem;
+
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
