@@ -1,7 +1,9 @@
 package Comics;
 import java.util.ArrayList;
 
-public class Comic {
+import PersonalCollection.PersonalCollectionItem;
+
+public class Comic implements PersonalCollectionItem{
     public String publisher;
     public String seriesTitle;
     public Integer volumeNumber;
