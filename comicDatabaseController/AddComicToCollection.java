@@ -1,5 +1,6 @@
 package comicDatabaseController;
 import java.util.List;
+import main.Comic;
 
 public class AddComicToCollection implements ModifyCommand {
     public List<Comic> database;

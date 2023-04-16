@@ -1,7 +1,7 @@
 package comicDatabaseController;
 
 import java.util.List;
-import java.util.Stack;
+import main.Comic;
 
 public class removeComicFromCollection implements ModifyCommand{
     public List<Comic> database;
