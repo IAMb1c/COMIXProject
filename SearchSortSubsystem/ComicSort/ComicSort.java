@@ -1,4 +1,4 @@
 package SearchSortSubsystem.ComicSort;
-public interface ComicSorts {
+public interface ComicSort {
     
 }

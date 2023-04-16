@@ -1,5 +1,5 @@
 package SearchSortSubsystem.ComicSearch;
 
-public interface ComicSearches {
+public interface ComicSearch {
     void search(String term);
 }

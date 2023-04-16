@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 
-public class ExactSearch implements ComicSearches{
-    
+public class ExactSearch implements ComicSearch{
+
     private final String DATABASE_FILEPATH = "COMIXProject/comics.csv";
     @Override
     public void search(String term) {
