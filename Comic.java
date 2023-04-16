@@ -36,4 +36,21 @@ public class Comic {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    // Getters (Using for Search/Sort)
+    public String getPublisher() {
+        return publisher;
+    }
+    public String getSeriesTitle() {
+        return seriesTitle;
+    }
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+    public int getIssue() {
+        return issueNumber;
+    }
+    public int getVolume() {
+        return volumeNumber;
+    }
 }
