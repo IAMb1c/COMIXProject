@@ -1,5 +1,5 @@
 package PersonalCollection;
 
-public interface PersonalCollectionItems {
+public interface PersonalCollectionItem {
     public String getName();
 }
