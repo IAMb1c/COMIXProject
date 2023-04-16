@@ -1,4 +1,4 @@
-package ViewSubsystem;
+package COMIXProject.ViewSubsystem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
