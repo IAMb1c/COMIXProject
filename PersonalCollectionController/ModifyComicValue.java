@@ -2,6 +2,7 @@ public class ModifyComicValue implements ModifyCommand{
 
     public Comic comic;
     public int personalCollectionId;
+    // TODO replace this with the personal collection object
     private String personalCollectionFile = "COMIXProject/personalCollections.csv";
 
     public ModifyComicValue( Comic comic, int personalCollectionId ) {

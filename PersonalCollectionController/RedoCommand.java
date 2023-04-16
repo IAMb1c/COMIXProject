@@ -3,6 +3,7 @@ import java.util.List;
 public class RedoCommand implements ModifyCommand{
     public List<ModifyCommand> redoStack;
     public List<ModifyCommand> undoStack;
+    // TODO add a personal collection object when available
 
     public RedoCommand(List<ModifyCommand> redoStack, List<ModifyCommand> undoStack ) {
         this.redoStack = redoStack;
