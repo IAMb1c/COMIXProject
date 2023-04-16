@@ -1,19 +1,33 @@
+import java.util.List;
+
+import PersonalCollection.PersonalCollection;
+import PersonalCollection.PersonalCollectionItems;
+
 public class ModifyComicValue implements ModifyCommand{
 
     public Comic comic;
     public int personalCollectionId;
-    // TODO replace this with the personal collection object
-    private String personalCollectionFile = "COMIXProject/personalCollections.csv";
+    public PersonalCollection personalCollection;
 
-    public ModifyComicValue( Comic comic, int personalCollectionId ) {
+    public ModifyComicValue( Comic comic, int personalCollectionId, PersonalCollection personalCollection ) {
         this.comic = comic;
         this.personalCollectionId = personalCollectionId;
+        this.personalCollection = personalCollection;
     }
 
     @Override
     public void execute() {
-        // TODO remove the comic from the personal collection then modify it and add it back to the personal collection
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
+        //** Arbitrarily adds a point of value to a comic so the more points the better ? */
+        // TODO add something to match these methods
+        // get a full list of comics from the personal collection
+        List<PersonalCollectionItems> items = personalCollection.getItems();
+        // find the comic in the list of comics items
+        for (PersonalCollectionItems i : items) {
+            if (i.getId() == personalCollectionId && i.getComicIssueNumber() == comic.getIssueNumber() ) {
+                // modify the comic
+                i.setValue( i.getValue() + 1 );
+            }
+        }
     }
     
 }

@@ -1,20 +1,26 @@
 import java.util.List;
 
+import PersonalCollection.PersonalCollection;
+import PersonalCollection.PersonalCollectionItems;
+
 public class AddComicToCollection implements ModifyCommand{
 
     public Comic comic;
     public int personalCollectionId;
-    // TODO replace this with the personal collection object
-    private String personalCollectionFile = "COMIXProject/personalCollections.csv";
+    public PersonalCollection personalCollection;
 
-    public AddComicToCollection( Comic comic, int personalCollectionId ) {
+    public AddComicToCollection( Comic comic, int personalCollectionId, PersonalCollection personalCollection ) {
         this.comic = comic;
         this.personalCollectionId = personalCollectionId;
+        this.personalCollection = personalCollection;
     }
 
     @Override
     public void execute() {
-        // TODO grab the comic and add it to the personal collection with the respective id
+        // TODO create these methods (or something similar) in the PersonalCollection class 
+        List<PersonalCollectionItems> items = personalCollection.getItems();
+        items.add( personalCollectionId, comic );
+        personalCollection.setItems( items );
     }
     
 }

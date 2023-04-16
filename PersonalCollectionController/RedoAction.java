@@ -1,15 +1,19 @@
+import java.security.PermissionCollection;
 import java.util.List;
+
+import PersonalCollection.PersonalCollection;
 
 public class RedoAction {
     public List<ModifyCommand> redoStack;
     public List<ModifyCommand> undoStack;
     public RedoCommand command;
-    // TODO add a personal collection object when available
+    public PersonalCollection personalCollection;
 
-    public RedoAction(List<ModifyCommand> redoStack, List<ModifyCommand> undoStack, RedoCommand command ) {
+    public RedoAction(List<ModifyCommand> redoStack, List<ModifyCommand> undoStack, RedoCommand command, PersonalCollection personalCollection ) {
         this.redoStack = redoStack;
         this.undoStack = undoStack;
         this.command = command;
+        this.personalCollection = personalCollection;
     }
 
     public void execute() {

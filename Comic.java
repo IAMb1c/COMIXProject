@@ -9,7 +9,8 @@ public class Comic {
     public ArrayList<String> creators;
     public ArrayList<String> principleCharacters;
     public String description;
-
+    //** New parameter to encapsulate a comics value *Arbitrary Scale*  Maybe move to personal collection item*/
+    public int value;
 
 
     public void setPublisher(String publisher) {
@@ -35,5 +36,37 @@ public class Comic {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getValue() {
+        return value;
+    } 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+    public String getSeriesTitle() {
+        return seriesTitle;
+    }
+    public Integer getVolumeNumber() {
+        return volumeNumber;
+    }
+    public Integer getIssueNumber() {
+        return issueNumber;
+    }
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+    public ArrayList<String> getCreators() {
+        return creators;
+    }
+    public ArrayList<String> getPrincipleCharacters() {
+        return principleCharacters;
+    }
+    public String getDescription() {
+        return description;
     }
 }

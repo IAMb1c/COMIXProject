@@ -1,11 +1,13 @@
 import java.util.List;
 
+import PersonalCollection.PersonalCollection;
+
 public class UndoCommand implements ModifyCommand {
     public List<ModifyCommand> redoStack;
     public List<ModifyCommand> undoStack;
-    // TODO add a personal collection object when available
+    public PersonalCollection personalCollection;
 
-    public UndoCommand(List<ModifyCommand> redoStack, List<ModifyCommand> undoStack ) {
+    public UndoCommand(List<ModifyCommand> redoStack, List<ModifyCommand> undoStack, PersonalCollection personalCollection) {
         this.redoStack = redoStack;
         this.undoStack = undoStack;
     }
