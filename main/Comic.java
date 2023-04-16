@@ -1,7 +1,5 @@
  package main;
 
-
-
 public class Comic {
    private String publisher;
    private String seriesTitle;
@@ -23,9 +21,28 @@ public class Comic {
        this.format = format;
        this.addedDate = addedDate;
    }
-   public String getSeriesTitle(){
+   // getters added by Kevin L. if these need to be removed, please let me know-- I need this for the searches
+    public String getSeriesTitle(){
        return this.seriesTitle;
-   }
+    }
+    public String getPublisher(){
+        return this.publisher;
+    }
+    public String getTitle() {
+        return fullTitle;
+    }
+    public String getDescription() {
+        return varDescription;
+    }
+    public String getCreators() {
+        return creators;
+    }
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+    public String getIssue() {
+        return issueNum;
+    }
    
    }
 
