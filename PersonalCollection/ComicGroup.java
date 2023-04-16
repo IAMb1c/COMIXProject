@@ -8,16 +8,21 @@ public class ComicGroup implements PersonalCollectionItem{
     private String name;
     // Type of objects stored, eg publishers, volumes, etc
     private String type;
+
+    public ComicGroup(String name, String type){
+        this.name = name;
+        this.type = type;
+    }
     private List<PersonalCollectionItem> comicGroup = new ArrayList<PersonalCollectionItem>();
 
 
-    @Override
+    
     public String getName() {
         // TODO Auto-generated method stub
         return this.name;
 
     }
-    @Override
+
     public String getType() {
         return this.type;
     }
