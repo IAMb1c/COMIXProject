@@ -16,7 +16,7 @@ public class ExactSearch implements ComicSearch{
             BufferedReader reader = new BufferedReader(new FileReader(DATABASE_FILEPATH));
             String line;
             while((line = reader.readLine()) != null) {
-                if(line.contains(term)) {
+                if(line.toLowerCase().contains(term.toLowerCase()))  {
                     comics.add(line);
                 }
             }
