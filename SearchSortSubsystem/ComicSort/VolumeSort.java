@@ -1,7 +1,5 @@
 package SearchSortSubsystem.ComicSort;
-
 import java.util.ArrayList;
-
 import main.Comic;
 
 public class VolumeSort implements ComicSort {
