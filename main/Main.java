@@ -42,6 +42,7 @@ public class Main {
                 userInput = getUserInput();
                 if( userInput.equals( user.getPassword().substring(1, user.getPassword().length()-1) ) ) {
                     System.out.println("Password accepted");
+                    user.isLoggedIn = true;
                     break;
                 } else {
                     System.out.println("Password incorrect");
@@ -56,6 +57,7 @@ public class Main {
             } else {
                 System.out.println("Welcome Guest!");
                 user.setUser(0, "GUEST", " ");
+                user.isLoggedIn = false;
             }
         }
         System.out.println("Please select an option:");
@@ -90,6 +92,7 @@ public class Main {
             if( userInput.equals(userInput2) ) {
                 System.out.println("Password created");
                 newPassword = userInput2;
+                user.isLoggedIn = true;
                 break;
             } else {
                 System.out.println("Passwords do not match");
@@ -117,6 +120,7 @@ public class Main {
             newPassword = "\"" + newPassword + "\"";
             bw.write( namingConventionsAreGood1 + "," + newUserName + "," + newPassword + "\n" );
             bw.close();
+            user.isLoggedIn = true;
         }
         catch( IOException e ) {
             System.out.println( "Error writing to file: " + e.getMessage() );
@@ -141,9 +145,6 @@ public class Main {
                 String[] words = line.split(",");
                 if( words[1].contains(userInput) ) {
                     user.setUser( Integer.parseInt(words[0].substring(1,words[0].length()-1)), words[1], words[2] );
-                    // id = words[0];
-                    // userName = words[1];
-                    // userPass = words[2];
                     return true;
                 }
             }

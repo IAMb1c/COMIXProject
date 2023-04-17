@@ -16,6 +16,9 @@ public class PersonalCollection {
     public PersonalCollection( PersonalCollection personalCollection ) {
         this.personalCollection = personalCollection.personalCollection;
     }
+    public PersonalCollection(){
+        this.personalCollection = new ArrayList<PersonalCollectionItems>();
+    }
 
     public void addItem(PersonalCollectionItems item){
         personalCollectionList.add(item);
@@ -33,6 +36,10 @@ public class PersonalCollection {
 
     public void addTo( int personalCollectionId, Comic comic ) {
         PersonalCollectionItems item = new PersonalCollectionItems( personalCollectionId, comic );
+        // check if the list is empty
+        if( personalCollection == null ) {
+            personalCollection = new ArrayList<PersonalCollectionItems>();
+        }
         personalCollection.add( item );
     }
     public List<PersonalCollectionItems> getPC() {
@@ -45,6 +52,10 @@ public class PersonalCollection {
 
     public PersonalCollection getPersonalCollection( int id ) {
         PersonalCollection userPC = new PersonalCollection( id );
+        // check if the list is empty
+        if( personalCollection == null ) {
+            personalCollection = new ArrayList<PersonalCollectionItems>();
+        }
         for( PersonalCollectionItems item : personalCollection ) {
             if( item.getId() == id ) {
                 userPC.addItem( item );

@@ -52,6 +52,18 @@ public class Comic {
         return this.value;
     }
 
+    @Override
+    public String toString() {
+        return "Series Title: " + this.seriesTitle + "\n" +
+                "   Issue Number: " + this.issueNum + "\n" +
+                "   Variant Description: " + this.varDescription + "\n" +
+                "   Publisher: " + this.publisher + "\n" +
+                "   Publication Date: " + this.publicationDate + "\n" +
+                "   Creators: " + this.creators + "\n" +
+                "   Format: " + this.format + "\n" +
+                "   Added Date: " + this.addedDate + "\n" + 
+                "   Value: " + this.getValue() + "\n";
+    }
 }
 
 // import java.util.ArrayList;
