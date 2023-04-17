@@ -1,17 +1,13 @@
+package ViewSubsystem;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public interface SystemViews {
-    public void view();
-    public String readDatabase( String filename );
-
-
+    public boolean view();
+  
     default void printInfo() {
-        System.out.println("""
-            "COMIX" - go to the COMIX database view \n
-            "VIEW" - go to the personal collection view \n
-            "EXIT - exit the program
-                """);
+        System.out.println("'COMIX' - go to the COMIX database view \n 'VIEW' - go to the personal collection view \n 'EXIT' - exit the program");
     }
 
     default String getUserInput() {

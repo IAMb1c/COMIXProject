@@ -1,3 +1,5 @@
+package ViewSubsystem;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,9 +7,6 @@ import java.io.IOException;
 public class ComixDatabaseView implements SystemViews {
     private String view;
 
-    public void view() {
-        System.out.println("Comix Database View");
-    }
 
     // return the contents of the database file that has comic book information
     // Series,Issue,"Full Title","Variant Description",Publisher,"Release Date",Format,"Added Date",Creators
@@ -29,6 +28,12 @@ public class ComixDatabaseView implements SystemViews {
             System.out.println( "Error reading file: " + e.getMessage() );
             return "file not found";
         }
+    }
+
+    
+    public boolean view() {
+        System.out.println("Comix Database View");
+        return false;
     }
 
     public static void main(String[] args) {

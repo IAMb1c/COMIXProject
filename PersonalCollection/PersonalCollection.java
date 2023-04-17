@@ -42,4 +42,14 @@ public class PersonalCollection {
         PersonalCollectionItems item = new PersonalCollectionItems( personalCollectionId, comic );
         personalCollection.remove( item );
     }
+
+    public List<PersonalCollectionItems> getPersonalCollection( int id ) {
+        List<PersonalCollectionItems> userPC = new ArrayList<PersonalCollectionItems>();
+        for( PersonalCollectionItems item : personalCollection ) {
+            if( item.getId() == id ) {
+                userPC.add( item );
+            }
+        }
+        return userPC;
+    }
 }

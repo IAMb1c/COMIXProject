@@ -8,10 +8,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import PersonalCollection.PersonalCollection;
+import ViewSubsystem.PersonalCollectionView;
+
 public class Main {
 
     static User user = new User();
-    static String userFile = "./users.csv";
+    static String userFile = "main/users.csv";    
+    static PersonalCollectionView pcv;
     
     /** Helper Method to grab the user's input */
     private static String getUserInput() {
@@ -28,7 +32,7 @@ public class Main {
     /** Prints the starting greeting for the user */
     private static void printMenu() {
         String userInput = "";
-        System.out.println("Welcome to COMIX!\nPlease enter your name or leave blank to continue:");
+        System.out.println("Welcome to COMIX!\nPlease enter your name:");
         userInput = getUserInput();
 
         if( findUser( userInput ) && !userInput.equals("") ) {
@@ -45,10 +49,13 @@ public class Main {
             }
             System.out.println("Welcome back " + user.getName() + "!");
         } else {
-            System.out.println("Welcome! \n Would You Like to Create an Account?: Y \n Press enter to continue as a guest");
+            System.out.println("Welcome! \n Would You Like to Create an Account?: Y \n OR press enter to continue as a guest");
             userInput = getUserInput();
             if( userInput.equals("Y") ) {
                 createNewUser();
+            } else {
+                System.out.println("Welcome Guest!");
+                user.setUser(0, "GUEST", " ");
             }
         }
         System.out.println("Please select an option:");
@@ -165,7 +172,8 @@ public class Main {
                     }
                     case "VIEW" -> {
                         System.out.println("VIEW");
-                        printInfo();
+                        pcv = new PersonalCollectionView( user );
+                        while( pcv.view() );
                     }
                     case "EXIT" -> {
                         System.out.println("EXIT");
@@ -183,9 +191,6 @@ public class Main {
                         printInfo();
                     }
                 }
-                // get user input
-                // process user input
-                // display results
             }
         }
     }
