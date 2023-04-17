@@ -14,12 +14,21 @@ public class PartialSeach implements ComicSearch{
         term = term.toLowerCase(); // makes it case insensitive
     
         for (Comic comic : comics) {
-            String fullTitle = comic.getTitle().toLowerCase();
-            String seriesTitle = comic.getSeriesTitle().toLowerCase();
-            String description = comic.getDescription().toLowerCase();
-            String creators = comic.getCreators().toLowerCase();
-            /** must just contain the sequence of characters to be counted */
-            if (fullTitle.contains(term) || seriesTitle.contains(term) || description.contains(term) || creators.contains(term)) {
+            String fullTitle = ""; String seriesTitle = ""; String description = ""; String creators = "";
+            if (comic.getTitle() != "") {
+                fullTitle = comic.getTitle().toLowerCase();
+            }
+            if (comic.getSeriesTitle() != "") {
+                seriesTitle = comic.getSeriesTitle().toLowerCase();
+            }
+            if (comic.getDescription() != "") {
+                description = comic.getDescription().toLowerCase();
+            }
+            if (comic.getCreators() != "") {
+                creators = comic.getCreators().toLowerCase();
+            }
+            /** Very strict search. Must *BE* the term */
+            if (fullTitle.equals(term) || seriesTitle.equals(term) || description.equals(term) || creators.equals(term)) {
                 filteredComics.add(comic);
             }
         }

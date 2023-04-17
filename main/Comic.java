@@ -29,19 +29,19 @@ public class Comic  {
         return this.publisher;
     }
     public String getTitle() {
-        return fullTitle;
+        return this.fullTitle;
     }
     public String getDescription() {
-        return varDescription;
+        return this.varDescription;
     }
     public String getCreators() {
-        return creators;
+        return this.creators;
     }
     public String getPublicationDate() {
-        return publicationDate;
+        return this.publicationDate;
     }
     public String getIssue() {
-        return issueNum;
+        return this.issueNum;
     }
    
    }
