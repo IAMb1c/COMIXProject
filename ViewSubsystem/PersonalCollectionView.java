@@ -18,6 +18,7 @@ import PersonalCollectionController.RedoCommand;
 import PersonalCollectionController.RemoveComicFromCollection;
 import PersonalCollectionController.UndoAction;
 import PersonalCollectionController.UndoCommand;
+import comicDatabaseController.removeComicFromCollection;
 import main.Comic;
 import main.ConsoleColors;
 import main.User;
@@ -84,7 +85,7 @@ public class PersonalCollectionView implements SystemViews {
         System.out.println("Personal Collection View \n" +
                 "   Do you want to view Personal Collections? Type 'PC' \n" +
                 "   Do you want to execute a Command? Type 'C' \n" +
-                "   Or hit enter to exit the personal collection view");
+                "   OR press enter to view all personal collections");
     }
 
     /* Print Personal Collection view Menu */
@@ -274,16 +275,11 @@ public class PersonalCollectionView implements SystemViews {
                     handlePC();
                 }
                 case "C" -> {
-                    // check if the user is logged in first
-                    if( user.isLoggedIn == true ) {
-                        handleCommand();
-                    } else {
-                        System.out.println("You must be logged in to use this feature");
-                    }
+                    System.out.println("Command handling here");
                 }
                 default -> {
-                    view = false;
-                    return false;
+                    System.out.println("Invalid input");
+                    printMainMenu();
                 }
             }
         }
