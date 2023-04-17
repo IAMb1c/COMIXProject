@@ -1,6 +1,6 @@
  package main;
 
-public class Comic {
+public class Comic  {
    private String publisher;
    private String seriesTitle;
    private String fullTitle;
@@ -11,7 +11,7 @@ public class Comic {
    private String format;
    private String addedDate;
 
-   public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
+   public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators) {
        this.publisher = publisher;
        this.seriesTitle = seriesTitle;
        this.issueNum = issueNum;

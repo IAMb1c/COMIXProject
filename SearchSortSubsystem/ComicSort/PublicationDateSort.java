@@ -1,13 +1,25 @@
 package SearchSortSubsystem.ComicSort;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import main.Comic;
 
 public class PublicationDateSort implements ComicSort {
 
     @Override
     public ArrayList<Comic> sort(ArrayList<Comic> filteredComics) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sort'");
+        Collections.sort(filteredComics, new Comparator<Comic>() {
+            public int compare(Comic c1, Comic c2) {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                LocalDate date1 = LocalDate.parse(c1.getPublicationDate(), format);
+                LocalDate date2 = LocalDate.parse(c2.getPublicationDate(), format);
+                return date1.compareTo(date2);
+            }
+        });
+        return filteredComics;
     }
     
 }
