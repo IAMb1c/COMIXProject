@@ -1,15 +1,16 @@
 import java.util.List;
 
 import PersonalCollection.PersonalCollection;
+import PersonalCollection.PersonalCollectionItem;
 import PersonalCollection.PersonalCollectionItems;
-
-public class ModifyComicValue implements ModifyCommand{
+import main.Comic;
+public class ModifyComicValueSigned implements ModifyCommand{
 
     public Comic comic;
     public int personalCollectionId;
     public PersonalCollection personalCollection;
 
-    public ModifyComicValue( Comic comic, int personalCollectionId, PersonalCollection personalCollection ) {
+    public ModifyComicValueSigned( Comic comic, int personalCollectionId, PersonalCollection personalCollection ) {
         this.comic = comic;
         this.personalCollectionId = personalCollectionId;
         this.personalCollection = personalCollection;
@@ -17,15 +18,13 @@ public class ModifyComicValue implements ModifyCommand{
 
     @Override
     public void execute() {
-        //** Arbitrarily adds a point of value to a comic so the more points the better ? */
-        // TODO add something to match these methods
         // get a full list of comics from the personal collection
-        List<PersonalCollectionItems> items = personalCollection.getItems();
+        List<PersonalCollectionItems> items = personalCollection.getPC();
         // find the comic in the list of comics items
         for (PersonalCollectionItems i : items) {
-            if (i.getId() == personalCollectionId && i.getComicIssueNumber() == comic.getIssueNumber() ) {
+            if (i.getId() == personalCollectionId && i.getComic() == comic ) {
                 // modify the comic
-                i.setValue( i.getValue() + 1 );
+                i.addValue( "Signed by " + i.getComic().getCreator() );
             }
         }
     }

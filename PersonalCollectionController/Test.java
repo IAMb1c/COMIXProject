@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,9 @@ public class Test {
     public static void main(String[] args) {
         List<ModifyCommand> undoStack = new ArrayList<ModifyCommand>();
         List<ModifyCommand> redoStack = new ArrayList<ModifyCommand>();
-        PersonalCollection personalCollection = new PersonalCollection();
+        // parse the personal collection csv file and create a personal collection
+        String csvFile = "../main/personalCollections.csv";
+        PersonalCollection personalCollection = new PersonalCollection( 1 );
 
         ModifyPersonalCollection modifyPersonalCollection = new ModifyPersonalCollection(undoStack, personalCollection);
         ModifyCommand command1 = new ModifyCommand() {

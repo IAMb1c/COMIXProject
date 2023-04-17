@@ -2,6 +2,7 @@ import java.util.List;
 
 import PersonalCollection.PersonalCollection;
 import PersonalCollection.PersonalCollectionItems;
+import main.Comic;
 
 public class AddComicToCollection implements ModifyCommand{
 
@@ -17,10 +18,7 @@ public class AddComicToCollection implements ModifyCommand{
 
     @Override
     public void execute() {
-        // TODO create these methods (or something similar) in the PersonalCollection class 
-        List<PersonalCollectionItems> items = personalCollection.getItems();
-        items.add( personalCollectionId, comic );
-        personalCollection.setItems( items );
+        personalCollection.addTo( personalCollectionId, comic );
     }
     
 }

@@ -1,4 +1,5 @@
 import PersonalCollection.PersonalCollection;
+import main.Comic;
 
 public class RemoveComicFromCollection implements ModifyCommand{
 
@@ -13,11 +14,7 @@ public class RemoveComicFromCollection implements ModifyCommand{
 
     @Override
     public void execute() {
-        // remove the comic from the personal collection
-        // TODO create these methods (or something similar) in the PersonalCollection class
-        List<Comic> comics = personalCollection.getComics();
-        comics.remove( comic );
-        personalCollection.setComics( comics );
+       personalCollection.remove( personalCollectionId, comic );
     }
     
 }
