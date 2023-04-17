@@ -12,9 +12,10 @@ public class Comic {
    private String addedDate;
    private String[] value = new String[0];
 
-   public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
+   public Comic(String seriesTitle, String issueNum, String fullTitle, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
        this.publisher = publisher;
        this.seriesTitle = seriesTitle;
+       this.fullTitle = fullTitle;
        this.issueNum = issueNum;
        this.publicationDate = publicationDate;
        this.creators = creators;

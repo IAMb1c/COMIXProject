@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import PersonalCollection.PersonalCollection;
+import ViewSubsystem.ComixDatabaseView;
 import ViewSubsystem.PersonalCollectionView;
 
 public class Main {
@@ -16,6 +17,7 @@ public class Main {
     static User user = new User();
     static String userFile = "main/users.csv";    
     static PersonalCollectionView pcv;
+    static ComixDatabaseView cdv;
     
     /** Helper Method to grab the user's input */
     private static String getUserInput() {
@@ -34,6 +36,7 @@ public class Main {
         String userInput = "";
         System.out.println("Welcome to COMIX!\nPlease enter your name:");
         userInput = getUserInput();
+        String tempUser = userInput;
 
         if( findUser( userInput ) && !userInput.equals("") ) {
             // handle the user's password
@@ -56,7 +59,7 @@ public class Main {
                 createNewUser();
             } else {
                 System.out.println("Welcome Guest!");
-                user.setUser(0, "GUEST", " ");
+                user.setUser(0, tempUser, " ");
                 user.isLoggedIn = false;
             }
         }
@@ -169,12 +172,14 @@ public class Main {
                 switch( userInput ) {
                     case "COMIX" -> {
                         System.out.println("COMIX");
-                        printInfo();
+                        cdv = new ComixDatabaseView( user );
+                        while( cdv.view() );
                     }
                     case "VIEW" -> {
                         System.out.println("VIEW");
                         pcv = new PersonalCollectionView( user );
                         while( pcv.view() );
+                        continue;
                     }
                     case "EXIT" -> {
                         System.out.println("EXIT");

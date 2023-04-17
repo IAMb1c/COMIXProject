@@ -27,7 +27,7 @@ public class CSV {
             while((line = reader.readLine()) != null){
                 if(i > 2){
                     String[] data = line.split(",");
-                    Comic comic = new Comic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+                    Comic comic = new Comic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8]);
                    database.add(comic);
                 }
                 //controller for how many comic to add to database, for testing purposes
