@@ -27,8 +27,8 @@ public class PartialSeach implements ComicSearch{
             if (comic.getCreators() != "") {
                 creators = comic.getCreators().toLowerCase();
             }
-            /** Very strict search. Must *BE* the term */
-            if (fullTitle.equals(term) || seriesTitle.equals(term) || description.equals(term) || creators.equals(term)) {
+            /** Lenient Search. */
+            if (fullTitle.contains(term) || seriesTitle.contains(term) || description.contains(term) || creators.contains(term)) {
                 filteredComics.add(comic);
             }
         }
