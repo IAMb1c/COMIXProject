@@ -1,5 +1,15 @@
 package SearchSortSubsystem.ComicSort;
 
-public class VolumeSort {
+import java.util.ArrayList;
+
+import main.Comic;
+
+public class VolumeSort implements ComicSort {
+
+    @Override
+    public ArrayList<Comic> sort(ArrayList<Comic> filteredComics) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sort'");
+    }
     
 }
