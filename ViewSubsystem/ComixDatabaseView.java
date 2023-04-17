@@ -4,8 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import main.User;
+
 public class ComixDatabaseView implements SystemViews {
-    private String view;
+
+    static String defaultCSV = "main/comics.csv";
+    private boolean view = true;
+    private User user;
+
+    public ComixDatabaseView( User user ) {
+        this.user = user;
+    }
 
 
     // return the contents of the database file that has comic book information
@@ -30,17 +39,46 @@ public class ComixDatabaseView implements SystemViews {
         }
     }
 
-    
-    public boolean view() {
-        System.out.println("Comix Database View");
-        return false;
+    /* Print main menu of commands */
+    public void printMainMenu() {
+        System.out.println("Comic Database View \n" +
+                "   Do you want to view the entire database? Type 'D' \n" +
+                "   Do you want to execute a Command? Type 'C' \n" +
+                "   Do you want to search the database? Type 'SE' \n" +
+                "   Do you want to sort the database? Type 'SO' \n" +
+                "   Do you want to import a database? Type 'I' \n" +
+                "   Do you want to export the database? Type 'E' \n");
     }
+  
 
-    public static void main(String[] args) {
-        ComixDatabaseView view = new ComixDatabaseView();
-        String str = view.readDatabase("COMIXProject/comics.csv");
-        System.out.println(str);
-
-        // TODO capturing user commands goes here ?
+    public boolean view() {
+        // get all the personal collections
+       
+        while( view ) {
+            printMainMenu();
+            String userInput = getUserInput();
+            switch( userInput ) {
+                case "D" -> {
+                    System.out.println( readDatabase( defaultCSV ) );
+                }
+                case "C" -> {
+                
+                }
+                case "SE" -> {
+                
+                }
+                case "SO" -> {
+                
+                }
+                case "I" -> {
+                
+                }
+                case "E" -> {
+                
+                }
+                default -> System.out.println( "Invalid input" );
+            }
+        }
+        return false;
     }
 }

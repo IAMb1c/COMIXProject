@@ -275,11 +275,16 @@ public class PersonalCollectionView implements SystemViews {
                     handlePC();
                 }
                 case "C" -> {
-                    System.out.println("Command handling here");
+                    // check if the user is logged in first
+                    if( user.isLoggedIn == true ) {
+                        handleCommand();
+                    } else {
+                        System.out.println("You must be logged in to use this feature");
+                    }
                 }
                 default -> {
-                    System.out.println("Invalid input");
-                    printMainMenu();
+                    view = false;
+                    return false;
                 }
             }
         }
