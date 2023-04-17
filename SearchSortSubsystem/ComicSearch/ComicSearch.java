@@ -1,5 +1,7 @@
 package SearchSortSubsystem.ComicSearch;
+import java.util.ArrayList;
+import main.Comic;
 
 public interface ComicSearch {
-    void search(String term);
+    ArrayList<Comic> search(String term);
 }
