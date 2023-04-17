@@ -6,7 +6,7 @@ import main.Comic;
  * Delegates file reading to the correct file reader class(CSV, JSON, XML)
  */
 public class FileAdapter implements ReadFile{
-    private JSON JSONReader;
+    private JSONReader JSONReader;
     private XML XMLReader;
     private CSV CSVReader;
     private String fileType;
@@ -21,8 +21,8 @@ public class FileAdapter implements ReadFile{
     @Override
     public List<Comic> readData() {
         if(this.fileType.equals("JSON")){
-            JSONReader = new JSON(this.filename);
-            JSONReader.convert();
+            JSONReader = new JSONReader(this.filename);
+            this.database = JSONReader.read();
         }
         else if(this.fileType.equals("XML")){
             XMLReader = new XML(this.filename);

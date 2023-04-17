@@ -1,8 +1,6 @@
 package comicDatabaseController;
 import java.util.ArrayList;
 import java.util.List;
-
-import ImportExport.CSV;
 import ImportExport.FileAdapter;
 import ImportExport.ReadFile;
 import main.Comic;
