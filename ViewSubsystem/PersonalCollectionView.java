@@ -7,6 +7,18 @@ import java.util.List;
 
 import PersonalCollection.PersonalCollection;
 import PersonalCollection.PersonalCollectionItems;
+import PersonalCollectionController.ModifyComicValueAuthenticated;
+import PersonalCollectionController.ModifyComicValueGraded;
+import PersonalCollectionController.ModifyComicValueSigned;
+import PersonalCollectionController.ModifyComicValueUserDefined;
+import PersonalCollectionController.ModifyCommand;
+import PersonalCollectionController.ModifyPersonalCollection;
+import PersonalCollectionController.RedoAction;
+import PersonalCollectionController.RedoCommand;
+import PersonalCollectionController.RemoveComicFromCollection;
+import PersonalCollectionController.UndoAction;
+import PersonalCollectionController.UndoCommand;
+import comicDatabaseController.removeComicFromCollection;
 import main.Comic;
 import main.ConsoleColors;
 import main.User;
@@ -18,11 +30,19 @@ public class PersonalCollectionView implements SystemViews {
     private PersonalCollection allPC = new PersonalCollection();
     private User user;
     private PersonalCollection userPC;
+    private List<ModifyCommand> undoStack;
+    private List<ModifyCommand> redoStack;
+    private ModifyPersonalCollection modifyInvoker;
+    private RedoAction redoInvoker;
+    private UndoAction undoInvoker;
 
     public PersonalCollectionView( User user ) {
         this.user = user;
         userPC = new PersonalCollection( user.getId() );
         allPC = getAllPC();
+        undoStack = new java.util.Stack<ModifyCommand>();
+        redoStack = new java.util.Stack<ModifyCommand>();
+        modifyInvoker = new ModifyPersonalCollection( undoStack, userPC );
     }
 
     private PersonalCollection getAllPC() {
@@ -76,8 +96,15 @@ public class PersonalCollectionView implements SystemViews {
                 "   OR press enter to view all personal collections");
     }
 
+    public void printPCSubMenu() {
+        System.out.println("Personal Collection View \n" +
+                "   Type 'SORT' to sort \n" +
+                "   Type 'Search to search' \n" );
+    }
+
     /* Handle Personal Collection user interaction */
     public void handlePC() {
+        // TODO handle searching and sorting somewhere in this method
         printPCMenu();
         String userInput = getUserInput();
         if( userInput.equals("P") ) {
@@ -112,15 +139,126 @@ public class PersonalCollectionView implements SystemViews {
     /* Print the available commands for a user */
     public void printCommands() {
         System.out.println("Commands \n" +
-                "   Add a comic to your own collection? Type 'AD <Issue Number'\n" +
-                "   Remove a comic from your own collection? Type 'RM <Issue Number'\n" +
-                "   Modify a comic value to be signed? Type 'SI <Issue Number'\n" +
-                "   Modify a comic value to be authenticated? Type 'AU <Issue Number'\n" +
-                "   Modify a comic value to be graded? Type 'GR <Issue Number'\n" +
-                "   Praise a comic value? Type 'PR <Issue Number'\n" +
+                "   Add a comic to your own collection? Type 'AD'\n" +
+                "   Remove a comic from your own collection? Type 'RM'\n" +
+                "   Modify a comic value to be signed? Type 'SI'\n" +
+                "   Modify a comic value to be authenticated? Type 'AU'\n" +
+                "   Modify a comic value to be graded? Type 'GR'\n" +
+                "   Praise a comic value? Type 'PR'\n" +
                 "   Undo the last command? Type 'UNDO'\n" +
                 "   Redo the last command? Type 'REDO'\n" +
                 "   OR press enter to return to the main menu");
+    }
+
+    /* Get the series title, issue number and publisher from the user */
+    public String[] getSIP() {
+        String seriesTitle, issueNumber, publisher = ""; 
+        System.out.println("Type in the series title here:");
+        seriesTitle = getUserInput();
+        System.out.println("Type in the issue number here:");
+        issueNumber = getUserInput();
+        System.out.println("Type in the publisher here:");
+        publisher = getUserInput();
+        String[] SIP = {seriesTitle, issueNumber, publisher};
+        return SIP;
+    }
+
+    /* Handle Command user interaction */
+    public void handleCommand() {
+        printCommands();
+        String userInput = getUserInput();
+        switch( userInput ) {
+            case "AD" -> {
+                String[] SIP = getSIP();
+
+                // find the comic in the database
+                // TODO link the current database to the personal collection
+
+            }
+            case "RM" -> {
+                String[] SIP = getSIP();
+
+                // handle removing the comic from the personal collection
+                // find the comic in the personal collection
+                for( PersonalCollectionItems item : userPC.getPC() ) {
+                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                        Comic comicToBeChanged = item.getComic();
+                        RemoveComicFromCollection removeComicFromCollection = new RemoveComicFromCollection( comicToBeChanged, userPC.getUserID(), userPC );
+                        modifyInvoker.execute(removeComicFromCollection);
+                        System.out.println("Comic removed from your personal collection");
+                    }
+                }
+            }
+            case "SI" -> {
+                String[] SIP = getSIP();
+                for( PersonalCollectionItems item : userPC.getPC() ) {
+                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                        Comic comicToBeChanged = item.getComic();
+                        ModifyComicValueSigned command = new ModifyComicValueSigned( comicToBeChanged, userPC.getUserID(), userPC );
+                        modifyInvoker.execute(command);
+                        System.out.println("Comic has been signed");
+                    }
+                }
+            }
+            case "AU" -> {
+                String[] SIP = getSIP();
+                for( PersonalCollectionItems item : userPC.getPC() ) {
+                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                        Comic comicToBeChanged = item.getComic();
+                        ModifyComicValueAuthenticated command = new ModifyComicValueAuthenticated( comicToBeChanged, userPC.getUserID(), userPC );
+                        modifyInvoker.execute(command);
+                        System.out.println("Comic has been authenticated");
+                    }
+                }
+            }
+            case "GR" -> {
+                String[] SIP = getSIP();
+                for( PersonalCollectionItems item : userPC.getPC() ) {
+                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                        Comic comicToBeChanged = item.getComic();
+                        ModifyComicValueGraded command = new ModifyComicValueGraded( comicToBeChanged, userPC.getUserID(), userPC );
+                        modifyInvoker.execute(command);
+                        System.out.println("Comic grade has been updated");
+                    }
+                }
+            }
+            case "PR" -> {
+                String[] SIP = getSIP();
+                for( PersonalCollectionItems item : userPC.getPC() ) {
+                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                        Comic comicToBeChanged = item.getComic();
+                        ModifyComicValueUserDefined command = new ModifyComicValueUserDefined( comicToBeChanged, userPC.getUserID(), userPC );
+                        modifyInvoker.execute(command);
+                        System.out.println("You just praised a comic");
+                    }
+                }
+            }
+            case "UNDO" -> {
+                try {
+                    UndoCommand undoCommand = new UndoCommand( redoStack, undoStack, userPC );
+                    undoInvoker = new UndoAction( redoStack, undoStack, undoCommand, userPC );
+                    undoInvoker.execute();
+                    System.out.println("Last command undone");
+                } catch (Exception e) {
+                    System.out.println("No commands to undo");
+                }
+                
+            }
+            case "REDO" -> {
+                try {
+                    RedoCommand redoCommand = new RedoCommand( redoStack, undoStack, userPC );
+                    redoInvoker = new RedoAction( redoStack, undoStack, redoCommand, userPC );
+                    redoInvoker.execute();
+                    System.out.println("Last command redone");
+                } catch (Exception e) {
+                    System.out.println("No commands to redo");
+                }
+            }
+            default -> {
+                System.out.println("Invalid input");
+                printCommands();
+            }
+        }
     }
 
     /** Displays the personal collection view and acts as a "main" */

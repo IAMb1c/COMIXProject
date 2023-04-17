@@ -25,6 +25,9 @@ public class Comic {
    public String getSeriesTitle(){
        return this.seriesTitle;
    }
+   public String getIssueNum() {
+       return issueNum;
+   }
    public String getpublisher(){
         return this.publisher;
    }

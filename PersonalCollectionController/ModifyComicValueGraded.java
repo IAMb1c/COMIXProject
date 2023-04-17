@@ -1,3 +1,5 @@
+package PersonalCollectionController;
+
 import java.util.List;
 
 import PersonalCollection.PersonalCollection;
