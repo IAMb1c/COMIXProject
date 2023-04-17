@@ -3,9 +3,19 @@ package PersonalCollection;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Comic;
+
 public class PersonalCollection {
     private List<PersonalCollectionItem> personalCollectionList = new ArrayList<PersonalCollectionItem>();
+    public List<PersonalCollectionItems> personalCollection;
     private int UserID;
+
+    public PersonalCollection(int UserID){
+        this.UserID = UserID;
+    }
+    public PersonalCollection( PersonalCollection personalCollection ) {
+        this.personalCollection = personalCollection.personalCollection;
+    }
 
     public void addItem(PersonalCollectionItem item){
         personalCollectionList.add(item);
@@ -18,5 +28,18 @@ public class PersonalCollection {
     }
     public int getUserID() {
         return UserID;
+    }
+
+
+    public void addTo( int personalCollectionId, Comic comic ) {
+        PersonalCollectionItems item = new PersonalCollectionItems( personalCollectionId, comic );
+        personalCollection.add( item );
+    }
+    public List<PersonalCollectionItems> getPC() {
+        return personalCollection;
+    }
+    public void remove( int personalCollectionId, Comic comic ) {
+        PersonalCollectionItems item = new PersonalCollectionItems( personalCollectionId, comic );
+        personalCollection.remove( item );
     }
 }
