@@ -1,3 +1,4 @@
+package PersonalCollectionController;
 import PersonalCollection.PersonalCollection;
 import main.Comic;
 

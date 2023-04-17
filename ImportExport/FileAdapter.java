@@ -26,7 +26,7 @@ public class FileAdapter implements ReadFile{
         }
         else if(this.fileType.equals("XML")){
             XMLReader = new XML(this.filename);
-            XMLReader.convert();
+            XMLReader.read();
         }
         else if(this.fileType.equals("CSV")){
             System.out.println("here");
