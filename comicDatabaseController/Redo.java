@@ -1,7 +1,6 @@
 package comicDatabaseController;
-
 import java.util.List;
-import java.util.Stack;
+
 
 public class Redo implements ModifyCommand {
     public List<ModifyCommand> commandsExecuted;
