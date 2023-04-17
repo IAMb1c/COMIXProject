@@ -1,7 +1,5 @@
  package main;
 
-
-
 public class Comic {
    private String publisher;
    private String seriesTitle;
@@ -12,6 +10,7 @@ public class Comic {
    private String varDescription; 
    private String format;
    private String addedDate;
+   private String[] value = new String[0];
 
    public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
        this.publisher = publisher;
@@ -26,8 +25,34 @@ public class Comic {
    public String getSeriesTitle(){
        return this.seriesTitle;
    }
-   
+   public String getpublisher(){
+        return this.publisher;
    }
+   public String getCreator() {
+        return this.creators;
+   }
+   
+
+    public void setValue( String[] values) {
+        this.value = values;
+    }
+    public void setSpecificValue( int index, String value ) {
+        this.value[index] = value;
+    }
+    public void addValue( String value ) {
+        // add the new string value to the array of strings
+        String[] newStringArray = new String[this.value.length + 1];
+        for (int i = 0; i < this.value.length; i++) {
+            newStringArray[i] = this.value[i];
+        }
+        newStringArray[newStringArray.length - 1] = value;
+        this.value = newStringArray;
+    }
+    public String[] getValue() {
+        return this.value;
+    }
+
+}
 
 // import java.util.ArrayList;
 
