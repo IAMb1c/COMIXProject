@@ -6,7 +6,7 @@ import java.util.List;
 import main.Comic;
 
 public class PersonalCollection {
-    private List<PersonalCollectionItem> personalCollectionList = new ArrayList<PersonalCollectionItem>();
+    private List<PersonalCollectionItems> personalCollectionList = new ArrayList<PersonalCollectionItems>();
     public List<PersonalCollectionItems> personalCollection;
     private int UserID;
 
@@ -17,13 +17,13 @@ public class PersonalCollection {
         this.personalCollection = personalCollection.personalCollection;
     }
 
-    public void addItem(PersonalCollectionItem item){
+    public void addItem(PersonalCollectionItems item){
         personalCollectionList.add(item);
     }
-    public void removeItem(PersonalCollectionItem item){
+    public void removeItem(PersonalCollectionItems item){
         personalCollectionList.remove(item);
     }
-    public List<PersonalCollectionItem> getChildren(){
+    public List<PersonalCollectionItems> getChildren(){
         return this.personalCollectionList;
     }
     public int getUserID() {
@@ -43,11 +43,11 @@ public class PersonalCollection {
         personalCollection.remove( item );
     }
 
-    public List<PersonalCollectionItems> getPersonalCollection( int id ) {
-        List<PersonalCollectionItems> userPC = new ArrayList<PersonalCollectionItems>();
+    public PersonalCollection getPersonalCollection( int id ) {
+        PersonalCollection userPC = new PersonalCollection( id );
         for( PersonalCollectionItems item : personalCollection ) {
             if( item.getId() == id ) {
-                userPC.add( item );
+                userPC.addItem( item );
             }
         }
         return userPC;

@@ -14,7 +14,7 @@ public class PersonalCollectionView implements SystemViews {
     
     static String PCFile = "../main/personalCollections.csv";
     private boolean view = true;
-    private PersonalCollectionItems AllPC;
+    private PersonalCollection AllPC;
     private PersonalCollection userPC;
     private User user;
 
@@ -39,7 +39,11 @@ public class PersonalCollectionView implements SystemViews {
             System.out.println( "Error reading file: " + e.getMessage() );
         }
     }
-    
+
+    /* Create a command list for users to use */
+
+
+    /** Displays the personal collection view and acts as a "main" */
     public boolean view() {
         // get all the personal collections
         getAllPC();
@@ -48,10 +52,25 @@ public class PersonalCollectionView implements SystemViews {
             String userInput = getUserInput();
             if( userInput.equals("P") ) {
                 // get the user's personal collection
+                userPC = AllPC.getPersonalCollection( user.getId() );
                 // view the user's personal collection
+                try {
+                    for( PersonalCollectionItems item : userPC.getPC() ) {
+                        System.out.println(item);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Oops! Something went wrong! \n Please restart the application and try again.");
+                }
             }
             else {
                 // view all the personal collections
+                try {
+                    for( PersonalCollectionItems item : AllPC.getPC() ) {
+                        System.out.println(item);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Oops! Something went wrong! \n Please restart the application and try again.");
+                }
             }
             
         }
