@@ -12,7 +12,7 @@ public class Comic implements PersonalCollectionItem{
     public ArrayList<String> principleCharacters;
     public String description;
     //** New parameter to encapsulate a comics value *Arbitrary Scale*  Maybe move to personal collection item*/
-    public int value;
+    public String value;
 
 
     public void setPublisher(String publisher) {
@@ -40,10 +40,10 @@ public class Comic implements PersonalCollectionItem{
         this.description = description;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     } 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
