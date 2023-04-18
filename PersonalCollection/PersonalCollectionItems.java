@@ -21,6 +21,10 @@ public class PersonalCollectionItems {
     public Comic getComic() {
         return comic;
     }
+    public void setComic( Comic comic ) {
+        this.comic = comic;
+    }
+
     public void setValue( String[] value ) {
         comic.setValue( value );
     }

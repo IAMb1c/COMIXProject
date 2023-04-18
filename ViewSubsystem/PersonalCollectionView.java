@@ -18,7 +18,6 @@ import PersonalCollectionController.RedoCommand;
 import PersonalCollectionController.RemoveComicFromCollection;
 import PersonalCollectionController.UndoAction;
 import PersonalCollectionController.UndoCommand;
-import comicDatabaseController.removeComicFromCollection;
 import main.Comic;
 import main.ConsoleColors;
 import main.User;
@@ -27,12 +26,12 @@ public class PersonalCollectionView implements SystemViews {
     
     static String PCFile = "main/personalCollections.csv";
     private boolean view = true;
-    private PersonalCollection allPC = new PersonalCollection();
+    public PersonalCollection allPC = new PersonalCollection();
     private User user;
-    private PersonalCollection userPC;
+    public PersonalCollection userPC;
     private List<ModifyCommand> undoStack;
     private List<ModifyCommand> redoStack;
-    private ModifyPersonalCollection modifyInvoker;
+    public ModifyPersonalCollection modifyInvoker;
     private RedoAction redoInvoker;
     private UndoAction undoInvoker;
 
@@ -55,9 +54,9 @@ public class PersonalCollectionView implements SystemViews {
                     isFirstLine = false;
                     continue;
                 }
-                String[] fields = line.split(",");
+                String[] fields = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 int uID = Integer.parseInt(fields[0]);
-                Comic comic = new Comic( fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8] );
+                Comic comic = new Comic( fields[1], fields[2],fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9] );
                
                 newPC.addTo(uID, comic);
                 
@@ -85,7 +84,7 @@ public class PersonalCollectionView implements SystemViews {
         System.out.println("Personal Collection View \n" +
                 "   Do you want to view Personal Collections? Type 'PC' \n" +
                 "   Do you want to execute a Command? Type 'C' \n" +
-                "   OR press enter to view all personal collections");
+                "   OR press enter to return to the main menu");
     }
 
     /* Print Personal Collection view Menu */
@@ -181,9 +180,11 @@ public class PersonalCollectionView implements SystemViews {
                 // handle removing the comic from the personal collection
                 // find the comic in the personal collection
                 for( PersonalCollectionItems item : userPC.getPC() ) {
-                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                    if( item.getComic().getSeriesTitle().strip().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getPublisher().substring(1, item.getComic().getPublisher().length()-1).equals( SIP[2] ) ) {
                         Comic comicToBeChanged = item.getComic();
-                        RemoveComicFromCollection removeComicFromCollection = new RemoveComicFromCollection( comicToBeChanged, userPC.getUserID(), userPC );
+                        userPC.removeItem(item);
+                        // TODO still throwing an error of a null personal collection
+                        RemoveComicFromCollection removeComicFromCollection = new RemoveComicFromCollection( comicToBeChanged, user.getId(), allPC );
                         modifyInvoker.execute(removeComicFromCollection);
                         System.out.println("Comic removed from your personal collection");
                     }
@@ -192,9 +193,11 @@ public class PersonalCollectionView implements SystemViews {
             case "SI" -> {
                 String[] SIP = getSIP();
                 for( PersonalCollectionItems item : userPC.getPC() ) {
-                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                    if( item.getComic().getSeriesTitle().strip().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getPublisher().substring(1, item.getComic().getPublisher().length()-1).equals( SIP[2] ) ) {
                         Comic comicToBeChanged = item.getComic();
-                        ModifyComicValueSigned command = new ModifyComicValueSigned( comicToBeChanged, userPC.getUserID(), userPC );
+                        userPC.removeItem(item);
+                        comicToBeChanged.addValue("Signed by: "+ comicToBeChanged.getCreator() );
+                        ModifyComicValueSigned command = new ModifyComicValueSigned( comicToBeChanged, userPC.getUserID(), allPC );
                         modifyInvoker.execute(command);
                         System.out.println("Comic has been signed");
                     }
@@ -203,8 +206,10 @@ public class PersonalCollectionView implements SystemViews {
             case "AU" -> {
                 String[] SIP = getSIP();
                 for( PersonalCollectionItems item : userPC.getPC() ) {
-                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                    if(  item.getComic().getSeriesTitle().strip().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getPublisher().substring(1, item.getComic().getPublisher().length()-1).equals( SIP[2] ) ) {
                         Comic comicToBeChanged = item.getComic();
+                        userPC.removeItem(item);
+                        comicToBeChanged.addValue("Authenticated by: "+ comicToBeChanged.getCreator() );
                         ModifyComicValueAuthenticated command = new ModifyComicValueAuthenticated( comicToBeChanged, userPC.getUserID(), userPC );
                         modifyInvoker.execute(command);
                         System.out.println("Comic has been authenticated");
@@ -214,8 +219,28 @@ public class PersonalCollectionView implements SystemViews {
             case "GR" -> {
                 String[] SIP = getSIP();
                 for( PersonalCollectionItems item : userPC.getPC() ) {
-                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                    if( item.getComic().getSeriesTitle().strip().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getPublisher().substring(1, item.getComic().getPublisher().length()-1).equals( SIP[2] ) ) {
                         Comic comicToBeChanged = item.getComic();
+                        userPC.removeItem(item);
+                        int j = 0;
+                        for( String s : item.getComic().getValue() ) {
+                            if ( s.contains( "Grade: " ) ) {
+                                // get the last 2 characters of the string
+                                String grade = s.substring( s.length() - 2 );
+                                // add to the grade value
+                                if ( grade.contains( "10" ) ) {
+                                    grade = "9";
+                                }
+                                int gradeValue = Integer.parseInt( grade ) + 1;
+                                String newString = "Grade: " + gradeValue;
+                                // modify the comic
+                                comicToBeChanged.setSpecificValue( j, newString );
+                            } else {
+                                // modify the comic
+                                comicToBeChanged.addValue( "Grade: 1" );
+                            }
+                            j++;
+                        }
                         ModifyComicValueGraded command = new ModifyComicValueGraded( comicToBeChanged, userPC.getUserID(), userPC );
                         modifyInvoker.execute(command);
                         System.out.println("Comic grade has been updated");
@@ -225,8 +250,10 @@ public class PersonalCollectionView implements SystemViews {
             case "PR" -> {
                 String[] SIP = getSIP();
                 for( PersonalCollectionItems item : userPC.getPC() ) {
-                    if( item.getComic().getSeriesTitle().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getpublisher().equals( SIP[2] ) ) {
+                    if( item.getComic().getSeriesTitle().strip().equals( SIP[0] ) && item.getComic().getIssueNum().equals( SIP[1] ) && item.getComic().getPublisher().substring(1, item.getComic().getPublisher().length()-1).equals( SIP[2] ) ) {
                         Comic comicToBeChanged = item.getComic();
+                        userPC.removeItem(item);
+                        comicToBeChanged.addValue("Praised by user "+ user.getName() );
                         ModifyComicValueUserDefined command = new ModifyComicValueUserDefined( comicToBeChanged, userPC.getUserID(), userPC );
                         modifyInvoker.execute(command);
                         System.out.println("You just praised a comic");
@@ -264,10 +291,11 @@ public class PersonalCollectionView implements SystemViews {
     /** Displays the personal collection view and acts as a "main" */
     public boolean view() {
         // get all the personal collections
-       
+        allPC = getAllPC();
+        userPC = getUserPC();
+
         while( view ) {
-            allPC = getAllPC();
-            userPC = getUserPC();
+            
             printMainMenu();
             String userInput = getUserInput();
             switch( userInput ) {

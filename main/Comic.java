@@ -12,10 +12,11 @@ public class Comic {
    private String addedDate;
    private String[] value = new String[0];
 
-   public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
+   public Comic(String seriesTitle, String issueNum, String fullTitle, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
        this.publisher = publisher;
        this.seriesTitle = seriesTitle;
        this.issueNum = issueNum;
+       this.fullTitle = fullTitle;
        this.publicationDate = publicationDate;
        this.creators = creators;
        this.varDescription = varDescription;
@@ -28,13 +29,28 @@ public class Comic {
    public String getIssueNum() {
        return issueNum;
    }
-   public String getpublisher(){
+   public String getPublisher(){
         return this.publisher;
    }
    public String getCreator() {
         return this.creators;
    }
-   
+   public String[] getValue() {
+        return this.value;
+    }
+    public String getAddedDate() {
+        return addedDate;
+    }public String getCreators() {
+        return creators;
+    }public String getFullTitle() {
+        return fullTitle;
+    }public String getPublicationDate() {
+        return publicationDate;
+    }public String getVarDescription() {
+        return varDescription;
+    }public String getFormat() {
+        return format;
+    }
 
     public void setValue( String[] values) {
         this.value = values;
@@ -51,21 +67,26 @@ public class Comic {
         newStringArray[newStringArray.length - 1] = value;
         this.value = newStringArray;
     }
-    public String[] getValue() {
-        return this.value;
+    public String printValue() {
+        String returned = "";
+        for (int i = 0; i < this.value.length; i++) {
+            returned += this.value[i] + " ";
+        }
+        return returned;
     }
 
     @Override
     public String toString() {
         return "Series Title: " + this.seriesTitle + "\n" +
                 "   Issue Number: " + this.issueNum + "\n" +
+                "   Full Title: " + this.fullTitle + "\n" +
                 "   Variant Description: " + this.varDescription + "\n" +
                 "   Publisher: " + this.publisher + "\n" +
                 "   Publication Date: " + this.publicationDate + "\n" +
                 "   Creators: " + this.creators + "\n" +
                 "   Format: " + this.format + "\n" +
                 "   Added Date: " + this.addedDate + "\n" + 
-                "   Value: " + this.getValue() + "\n";
+                "   Value: " + this.printValue() + "\n";
     }
 }
 
