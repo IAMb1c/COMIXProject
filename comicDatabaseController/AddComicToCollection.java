@@ -21,5 +21,9 @@ public class AddComicToCollection implements ModifyCommand {
     public String getId(){
         return this.id;
     }
+    @Override
+    public List<Comic> getDatabase() {
+        return this.database;
+    }
    
 }

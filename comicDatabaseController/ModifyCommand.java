@@ -1,5 +1,9 @@
 package comicDatabaseController;
 
+import java.util.List;
+
+import main.Comic;
+
 /**
  * Command class represents database/collection commands
  */
@@ -14,4 +18,6 @@ public interface ModifyCommand {
      * @return id associated with the specific command
      */
     public String getId();
+
+    public List<Comic> getDatabase();
 }

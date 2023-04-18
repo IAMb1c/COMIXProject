@@ -36,5 +36,9 @@ public class Undo implements ModifyCommand {
     public String getId() {
         return id;
     }
+    @Override
+    public List<Comic> getDatabase() {
+        return this.database;
+    }
     
 }
