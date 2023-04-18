@@ -46,7 +46,6 @@ public class Comic {
         return this.issueNum;
     }
    
-   }
    public String getpublisher(){
         return this.publisher;
    }
