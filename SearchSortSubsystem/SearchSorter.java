@@ -12,16 +12,25 @@ import SearchSortSubsystem.ComicSearch.*;
 public class SearchSorter {
     private ComicSearch searcher;
     private ComicSort sorter;
-
-    public void setSearch(ComicSearch newSearcher) {
-        this.searcher = newSearcher;
+    /* The comix database now does not need to know/make the individual searches */
+    public void setExactSearch() {
+        this.searcher = new ExactSearch();
     }
-    public void setSort(ComicSort newSorter) {
-        this.sorter = newSorter;
+    public void setPartialSearch() {
+        this.searcher = new PartialSeach();
+    }
+    public void setIssueSort() {
+        this.sorter = new IssueSort();
+    }
+    public void setPubDateSort() {
+        this.sorter = new PublicationDateSort();
+    }
+    public void setTitleSort() {
+        this.sorter = new TitleSort();
     }
 
-    public List<Comic> searchComics(String term) {
-        return searcher.search(term);
+    public List<Comic> searchComics(String[] SIP) {
+        return searcher.search(SIP);
     }
     public List<Comic> sortComics(List<Comic> comics) {
         return sorter.sort(comics);
