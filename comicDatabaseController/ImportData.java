@@ -28,9 +28,6 @@ public class ImportData implements ModifyCommand {
     public void executeCommand() {
        read();
        commandsExecuted.add(this);
-       // ComicDatabase data = new ComicDatabase("main/comics.csv");
-        //data.read();
-       // database = data.getComics();
     }
 
     @Override
@@ -38,6 +35,11 @@ public class ImportData implements ModifyCommand {
         return this.id;
     }
 
+    @Override
+    public List<Comic> getDatabase() {
+        return this.database;
+    }
+    
     public static void main(String[] args) {
         List<ModifyCommand> commands = new ArrayList<ModifyCommand>();
         List<Comic> database = new ArrayList<>();
@@ -47,5 +49,4 @@ public class ImportData implements ModifyCommand {
             System.out.println(comic.getSeriesTitle());
         }
     }
-    
 }

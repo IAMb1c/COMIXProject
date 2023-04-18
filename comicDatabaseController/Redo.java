@@ -1,6 +1,8 @@
 package comicDatabaseController;
 import java.util.List;
 
+import main.Comic;
+
 
 public class Redo implements ModifyCommand {
     public List<ModifyCommand> commandsExecuted;
@@ -26,6 +28,12 @@ public class Redo implements ModifyCommand {
     @Override
     public String getId() {
         return this.id;
+    }
+
+    @Override
+    public List<Comic> getDatabase() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }
