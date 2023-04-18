@@ -1,10 +1,6 @@
 package ImportExport;
-import org.json.simple.*;
 import org.json.simple.parser.*;
-
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,13 +50,5 @@ public class JSONReader {
        
  
         return this.database;
-    }
-
-    public static void main(String[] args) {
-        JSONReader reader  = new JSONReader("main/csvjson.json");
-        List<Comic> d = reader.read();
-        // for(Comic c : d){
-        //     System.out.println(c.getSeriesTitle());
-        // }
     }
 }
