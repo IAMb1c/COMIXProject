@@ -1,16 +1,18 @@
 package SearchSortSubsystem.ComicSearch;
 import java.util.ArrayList;
+import java.util.List;
+import comicDatabaseController.ExportData;
 import main.Comic;
 import main.ComicDatabase;
 
 public class ExactSearch implements ComicSearch{
-    ComicDatabase database = new ComicDatabase();
+    ExportData database = new ExportData();
 
     @Override
-    public ArrayList<Comic> search(String term) {
+    public List<Comic> search(String term) {
         /** Array */
-        ArrayList<Comic> filteredComics = new ArrayList<Comic>();
-        ArrayList<Comic> comics = database.getComics();
+        List<Comic> filteredComics = new ArrayList<Comic>();
+        List<Comic> comics = database.getDatabase();
 
         term = term.toLowerCase(); // makes it case insensitive
     

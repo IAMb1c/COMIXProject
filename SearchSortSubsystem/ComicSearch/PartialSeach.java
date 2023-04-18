@@ -1,15 +1,17 @@
 package SearchSortSubsystem.ComicSearch;
 import java.util.ArrayList;
+import java.util.List;
+
+import comicDatabaseController.ExportData;
 import main.Comic;
-import main.ComicDatabase;
 
 public class PartialSeach implements ComicSearch{
-    ComicDatabase database = new ComicDatabase();
+    ExportData database = new ExportData();
 
     @Override
-    public ArrayList<Comic> search(String term) {
-        ArrayList<Comic> filteredComics = new ArrayList<Comic>();
-        ArrayList<Comic> comics = database.getComics();
+    public List<Comic> search(String term) {
+        List<Comic> filteredComics = new ArrayList<Comic>();
+        List<Comic> comics = database.getDatabase();
 
         term = term.toLowerCase(); // makes it case insensitive
     

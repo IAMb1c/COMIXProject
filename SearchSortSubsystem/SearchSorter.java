@@ -1,8 +1,10 @@
 package SearchSortSubsystem;
 import SearchSortSubsystem.ComicSort.*;
+import comicDatabaseController.ImportData;
 import main.Comic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import SearchSortSubsystem.ComicSearch.*;
 
@@ -18,10 +20,10 @@ public class SearchSorter {
         this.sorter = newSorter;
     }
 
-    public ArrayList<Comic> searchComics(String term) {
+    public List<Comic> searchComics(String term) {
         return searcher.search(term);
     }
-    public ArrayList<Comic> sortComics(ArrayList<Comic> comics) {
+    public List<Comic> sortComics(List<Comic> comics) {
         return sorter.sort(comics);
     }
 }
