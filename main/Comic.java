@@ -23,13 +23,34 @@ public class Comic {
        this.format = format;
        this.addedDate = addedDate;
    }
-   public String getSeriesTitle(){
+   // getters added by Kevin L. if these need to be removed, please let me know-- I need this for the searches
+    public String getSeriesTitle(){
        return this.seriesTitle;
    }
    public String getIssueNum() {
        return issueNum;
    }
-   public String getPublisher(){
+
+    public String getPublisher(){
+        return this.publisher;
+    }
+    public String getTitle() {
+        return this.fullTitle;
+    }
+    public String getDescription() {
+        return this.varDescription;
+    }
+    public String getCreators() {
+        return this.creators;
+    }
+    public String getPublicationDate() {
+        return this.publicationDate;
+    }
+    public String getIssue() {
+        return this.issueNum;
+    }
+   
+   public String getpublisher(){
         return this.publisher;
    }
    public String getCreator() {
@@ -40,12 +61,8 @@ public class Comic {
     }
     public String getAddedDate() {
         return addedDate;
-    }public String getCreators() {
-        return creators;
     }public String getFullTitle() {
         return fullTitle;
-    }public String getPublicationDate() {
-        return publicationDate;
     }public String getVarDescription() {
         return varDescription;
     }public String getFormat() {
