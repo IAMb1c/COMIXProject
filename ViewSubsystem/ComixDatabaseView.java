@@ -3,7 +3,10 @@ package ViewSubsystem;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
+import PersonalCollection.PersonalCollection;
+import main.Comic;
 import main.User;
 
 public class ComixDatabaseView implements SystemViews {
@@ -11,9 +14,15 @@ public class ComixDatabaseView implements SystemViews {
     static String defaultCSV = "main/comics.csv";
     private boolean view = true;
     private User user;
+    private PersonalCollection allPC;
+    private PersonalCollection userPC;
+    private List<Comic> database;
 
-    public ComixDatabaseView( User user ) {
+    public ComixDatabaseView( User user, PersonalCollection allPC, PersonalCollection userPC, List<Comic> database ) {
         this.user = user;
+        this.allPC = allPC;
+        this.userPC = userPC;
+        this.database = database;
     }
 
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import PersonalCollection.PersonalCollection;
 import PersonalCollection.PersonalCollectionItems;
+import PersonalCollectionController.AddComicToCollection;
 import PersonalCollectionController.ModifyComicValueAuthenticated;
 import PersonalCollectionController.ModifyComicValueGraded;
 import PersonalCollectionController.ModifyComicValueSigned;
@@ -26,47 +27,50 @@ public class PersonalCollectionView implements SystemViews {
     
     static String PCFile = "main/personalCollections.csv";
     private boolean view = true;
-    public PersonalCollection allPC = new PersonalCollection();
     private User user;
+    public PersonalCollection allPC;
     public PersonalCollection userPC;
     private List<ModifyCommand> undoStack;
     private List<ModifyCommand> redoStack;
     public ModifyPersonalCollection modifyInvoker;
     private RedoAction redoInvoker;
     private UndoAction undoInvoker;
+    private List<Comic> database;
 
-    public PersonalCollectionView( User user ) {
+    public PersonalCollectionView( User user, PersonalCollection allPC, PersonalCollection userPC, List<Comic> database ) {
         this.user = user;
-        userPC = new PersonalCollection( user.getId() );
-        allPC = getAllPC();
+        this.userPC = userPC;
+        // allPC = getAllPC();
+        this.allPC = allPC;
+        this.database = database;
         undoStack = new java.util.Stack<ModifyCommand>();
         redoStack = new java.util.Stack<ModifyCommand>();
         modifyInvoker = new ModifyPersonalCollection( undoStack, userPC );
     }
 
-    private PersonalCollection getAllPC() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(PCFile))) {
-            String line;
-            boolean isFirstLine = true; // Skip the header line
-            PersonalCollection newPC = new PersonalCollection();
-            while ((line = reader.readLine()) != null) {
-                if (isFirstLine) {
-                    isFirstLine = false;
-                    continue;
-                }
-                String[] fields = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                int uID = Integer.parseInt(fields[0]);
-                Comic comic = new Comic( fields[1], fields[2],fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9] );
+    // private PersonalCollection getAllPC() {
+    //     try (BufferedReader reader = new BufferedReader(new FileReader(PCFile))) {
+    //         String line;
+    //         boolean isFirstLine = true; // Skip the header line
+    //         PersonalCollection newPC = new PersonalCollection();
+    //         while ((line = reader.readLine()) != null) {
+    //             if (isFirstLine) {
+    //                 isFirstLine = false;
+    //                 continue;
+    //             }
+    //             String[] fields = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+    //             int uID = Integer.parseInt(fields[0]);
+    //             Comic comic = new Comic( fields[1], fields[2],fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9] );
                
-                newPC.addTo(uID, comic);
+    //             newPC.addTo(uID, comic);
                 
-            }
-            return newPC;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    //         }
+    //         return newPC;
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //         return null;
+    //     }
+    // }
 
     /* Get a users specific personal collection by matching the current id with the personal collection id */
     private PersonalCollection getUserPC() {
@@ -170,9 +174,17 @@ public class PersonalCollectionView implements SystemViews {
             case "AD" -> {
                 String[] SIP = getSIP();
 
-                // find the comic in the database
-                // TODO link the current database to the personal collection
-
+                // search the database object for the comic
+                for( Comic c : database ) {
+                    if( c.getSeriesTitle().strip().equals( SIP[0] ) && c.getIssueNum().equals( SIP[1] ) && c.getPublisher().substring(1, c.getPublisher().length()-1).equals( SIP[2] ) ) {
+                        // add the comic to the personal collection
+                        Comic toBeAdded = c;
+                        userPC.addTo( user.getId(), c );
+                        AddComicToCollection addComicToCollection = new AddComicToCollection( c, user.getId(), allPC );
+                        modifyInvoker.execute(addComicToCollection);
+                        System.out.println("Comic added to your personal collection");
+                    }
+                }
             }
             case "RM" -> {
                 String[] SIP = getSIP();
@@ -291,7 +303,7 @@ public class PersonalCollectionView implements SystemViews {
     /** Displays the personal collection view and acts as a "main" */
     public boolean view() {
         // get all the personal collections
-        allPC = getAllPC();
+        // allPC = getAllPC();
         userPC = getUserPC();
 
         while( view ) {

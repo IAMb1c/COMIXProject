@@ -7,18 +7,25 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import PersonalCollection.PersonalCollection;
+import PersonalCollection.PersonalCollectionItems;
 import ViewSubsystem.ComixDatabaseView;
 import ViewSubsystem.PersonalCollectionView;
 
 public class Main {
 
+    static String PCFile = "main/personalCollections.csv";
     static User user = new User();
     static String userFile = "main/users.csv";    
     static PersonalCollectionView pcv;
     static ComixDatabaseView cdv;
-    
+    public static PersonalCollection allPC = new PersonalCollection();
+    public static PersonalCollection userPC;
+    public static List<Comic> database; 
+
     /** Helper Method to grab the user's input */
     private static String getUserInput() {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -158,10 +165,71 @@ public class Main {
         return false;
     }
     
+
+    private static PersonalCollection getAllPC() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(PCFile))) {
+            String line;
+            boolean isFirstLine = true; // Skip the header line
+            PersonalCollection newPC = new PersonalCollection();
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
+                String[] fields = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                int uID = Integer.parseInt(fields[0]);
+                Comic comic = new Comic( fields[1], fields[2],fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9] );
+               
+                newPC.addTo(uID, comic);
+                
+            }
+            return newPC;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    
+    /* Get a users specific personal collection by matching the current id with the personal collection id */
+    private static PersonalCollection getUserPC() {
+        PersonalCollection newPC = new PersonalCollection();
+        for( PersonalCollectionItems item : allPC.getPC() ) {
+            if( item.getId() == user.getId() ) {
+                newPC.addTo( user.getId(), item.getComic() );
+            }
+        }
+        return newPC;
+    }
+
+    private static List<Comic> getComicDatabase() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("main/comics.csv"))) {
+            String line;
+            boolean isFirstLine = true; // Skip the header line
+            List<Comic> newDB = new ArrayList<>();
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
+                String[] fields = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                Comic comic = new Comic( fields[0], fields[1],fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8] );
+                newDB.add(comic);
+            }
+            return newDB;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /** The main method for the program */
     public static void main(String[] args) {
         boolean running = true;
         // for testing purposes so its easier to restart app
+        allPC = getAllPC();
+        userPC = getUserPC();
+        // database = getComicDatabase();
         while( running  ) { // remove this later
             boolean exit = false;
             
@@ -172,12 +240,12 @@ public class Main {
                 switch( userInput ) {
                     case "COMIX" -> {
                         System.out.println("COMIX");
-                        cdv = new ComixDatabaseView( user );
+                        cdv = new ComixDatabaseView( user, allPC, userPC, database );
                         while( cdv.view() );
                     }
                     case "VIEW" -> {
                         System.out.println("VIEW");
-                        pcv = new PersonalCollectionView( user );
+                        pcv = new PersonalCollectionView( user, allPC, userPC, database );
                         while( pcv.view() );
                         continue;
                     }
