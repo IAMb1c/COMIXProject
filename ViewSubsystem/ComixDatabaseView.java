@@ -56,7 +56,8 @@ public class ComixDatabaseView implements SystemViews {
                 "   Do you want to search the database? Type 'SE' \n" +
                 "   Do you want to sort the database? Type 'SO' \n" +
                 "   Do you want to import a database? Type 'I' \n" +
-                "   Do you want to export the database? Type 'E' \n");
+                "   Do you want to export the database? Type 'E' \n" +
+                "   Or press enter to return to the main menu");
     }
   
     /* print the menu for commands */
@@ -274,7 +275,10 @@ public class ComixDatabaseView implements SystemViews {
                         System.out.println("You must be logged in to use this feature");
                     }
                 }
-                default -> System.out.println( "Invalid input" );
+                default -> {
+                    view = false;
+                    return false;
+                }
             }
         }
         return false;
