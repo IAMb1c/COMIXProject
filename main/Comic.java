@@ -12,7 +12,7 @@ public class Comic {
    private String addedDate;
    private String[] value = new String[0];
 
-   public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators){
+   public Comic(String seriesTitle, String issueNum, String varDescription, String publisher, String publicationDate, String format, String addedDate, String creators) {
        this.publisher = publisher;
        this.seriesTitle = seriesTitle;
        this.issueNum = issueNum;
@@ -22,14 +22,37 @@ public class Comic {
        this.format = format;
        this.addedDate = addedDate;
    }
-   public String getSeriesTitle(){
+   // getters added by Kevin L. if these need to be removed, please let me know-- I need this for the searches
+    public String getSeriesTitle(){
        return this.seriesTitle;
+
+    }
+    public String getPublisher(){
+        return this.publisher;
+    }
+    public String getTitle() {
+        return this.fullTitle;
+    }
+    public String getDescription() {
+        return this.varDescription;
+    }
+    public String getCreators() {
+        return this.creators;
+    }
+    public String getPublicationDate() {
+        return this.publicationDate;
+    }
+    public String getIssue() {
+        return this.issueNum;
+    }
+   
    }
    public String getpublisher(){
         return this.publisher;
    }
    public String getCreator() {
         return this.creators;
+
    }
    
 
